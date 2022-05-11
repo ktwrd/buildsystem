@@ -35,7 +35,7 @@
     function onClickButtonConnect() {
         websocket = new WebSocket(wsUri);
         doSend = (message) => {
-            writeToScreen("SENT: " + message);
+            writeToScreen(`<h3>send</h3><pre><code>${message}</code></pre>`)
             websocket.send(message);
         }
         websocket.onopen = function (e) {
@@ -49,7 +49,7 @@
 
         websocket.onmessage = async function (e, ...p) {
         let text = await e.data.text()
-            writeToScreen("<span>RESPONSE: " + text + "</span>");
+            writeToScreen(`<h3>response</h3><pre><code>${text}</code></pre>`);
         };
 
         websocket.onerror = function (e) {

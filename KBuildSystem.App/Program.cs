@@ -2,11 +2,15 @@
 
 namespace KBuildSystem.App
 {
-    class MainClass
+    public static class MainClass
     {
+        public static Server Server = null;
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Server = new Server();
+            Server.InitalizeServer();
+            Server.StartThreads();
+            Console.ReadKey(true);
         }
     }
 }

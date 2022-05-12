@@ -82,6 +82,8 @@
     <Compile Include="Helpers\Bindable.cs" />
     <Compile Include="Helpers\GeneralHelper.cs" />
     <Compile Include="Helpers\SafeWriteableStream.cs" />
+    <Compile Include="Build\BuildStatusObject.cs" />
+    <Compile Include="Build\BuildSignature.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

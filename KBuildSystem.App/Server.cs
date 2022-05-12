@@ -24,6 +24,11 @@ namespace KBuildSystem.App
             Thread threadWebSocketServer = new Thread(new ThreadStart(() => Thread_WebSocketServer(waithandleWebSocketServer)));
             WaitHandleList.Add(waithandleWebSocketServer);
             ThreadList.Add(threadWebSocketServer);
+
+            EventWaitHandle waithandleBuildController = new EventWaitHandle(false, EventResetMode.ManualReset);
+            Thread threadBuildController = new Thread(new ThreadStart(() => Thread_BuildController(waithandleBuildController)));
+            WaitHandleList.Add(waithandleBuildController);
+            ThreadList.Add(threadBuildController);
         }
 
         public void StartThreads()
@@ -36,9 +41,16 @@ namespace KBuildSystem.App
             WaitHandle.WaitAll(WaitHandleList.ToArray());
         }
 
-        public BuildController BuildController = new BuildController(new BuildControllerOptions {
-            BasePath = ConfigManager.sysRootDataLocation
-        });
+        public BuildController BuildController;
+
+        public void Thread_BuildController(EventWaitHandle handle)
+        {
+            BuildController = new BuildController(this, new BuildControllerOptions
+            {
+                BasePath = ConfigManager.sysRootDataLocation
+            });
+            handle.Set();
+        }
 
         public string WebSocketServerAddress = String.Format(@"ws://{0}:{1}", ConfigManager.svwsAddress, ConfigManager.svwsPort);
 

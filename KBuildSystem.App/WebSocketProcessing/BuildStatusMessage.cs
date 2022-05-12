@@ -7,10 +7,9 @@ namespace KBuildSystem.App.WebSocketProcessing
     {
         public override void Process(Server server, WebSocketServerWrapper wrapper)
         {
-            server.GetBuildStatus(id);
-            wrapper.SendResponse(String.Format(@"The build status for the build with ID of '{0}' would be here!", id));
-
-            server.BuildController.GetByID(id);
+            var build = server.BuildController.GetByID(id);
+            wrapper.SendResponse(build.CurrentStatus);
+            Console.WriteLine(build == null);
         }
 
         public string id { get; set; }

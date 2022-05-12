@@ -26,7 +26,7 @@ namespace KBuildSystem.App.Build
     public class BuildController
     {
         public BuildControllerOptions Options { get; private set; }
-
+        public Server Server;
         public string BuildHistoryDirectory
         {
             get
@@ -35,8 +35,9 @@ namespace KBuildSystem.App.Build
             }
         }
 
-        public BuildController(BuildControllerOptions options)
+        public BuildController(Server server, BuildControllerOptions options)
         {
+            Server = server;
             Options = options;
             if (!Directory.Exists(Options.BasePath))
                 Directory.CreateDirectory(Options.BasePath);
@@ -65,7 +66,7 @@ namespace KBuildSystem.App.Build
 
         private void updateBuildHistory()
         {
-            Regex filenameExpression = new Regex(@"[a-zA-Z0-9_\-]+\.bhis$", RegexOptions.IgnoreCase);
+            Regex filenameExpression = new Regex(@"(\/|\\\\)[a-zA-Z0-9_\-]{1,}\.bhis$", RegexOptions.IgnoreCase);
 
             string[] files = Directory.GetFiles(BuildHistoryDirectory);
 
@@ -73,7 +74,8 @@ namespace KBuildSystem.App.Build
 
             foreach (string filename in files)
             {
-                if (!filenameExpression.Match(filename).Success)
+                Match regexMatch = filenameExpression.Match(filename);
+                if (!regexMatch.Success)
                     continue;
                 BuildHistoryObject item = parseBuildHistoryFile(filename);
                 if (item != null)
@@ -81,6 +83,8 @@ namespace KBuildSystem.App.Build
                     buildHistory.Add(item);
                 }
             }
+
+            BuildHistory = buildHistory;
         }
 
         private BuildHistoryObject parseBuildHistoryFile(string filename)

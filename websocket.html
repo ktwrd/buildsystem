@@ -39,8 +39,8 @@
             websocket.send(message);
         }
         websocket.onopen = function (e) {
-            writeToScreen("CONNECTED");
-            doSend(`KBuildSystem.App.WebSocketProcessing.BuildStatusMessage\n{"id":"poop"}`)
+            writeToScreen(`CONNECTED -> ${wsUri}`);
+            doSend(`KBuildSystem.App.WebSocketProcessing.BuildStatusMessage\n{"id":"stinky"}`)
         };
 
         websocket.onclose = function (e) {

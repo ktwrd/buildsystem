@@ -9,6 +9,8 @@ namespace KBuildSystem.App.WebSocketProcessing
         {
             server.GetBuildStatus(id);
             wrapper.SendResponse(String.Format(@"The build status for the build with ID of '{0}' would be here!", id));
+
+            server.BuildController.GetByID(id);
         }
 
         public string id { get; set; }

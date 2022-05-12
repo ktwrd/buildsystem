@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
+using KBuildSystem.App.Build;
+using KBuildSystem.App.Configuration;
 using KBuildSystem.App.WebSocketService;
 
 namespace KBuildSystem.App
@@ -33,7 +36,11 @@ namespace KBuildSystem.App
             WaitHandle.WaitAll(WaitHandleList.ToArray());
         }
 
-        public string WebSocketServerAddress = @"ws://0.0.0.0:8090";
+        public BuildController BuildController = new BuildController(new BuildControllerOptions {
+            BasePath = ConfigManager.sysRootDataLocation
+        });
+
+        public string WebSocketServerAddress = String.Format(@"ws://{0}:{1}", ConfigManager.svwsAddress, ConfigManager.svwsPort);
 
         public void Thread_WebSocketServer(EventWaitHandle handle)
         {

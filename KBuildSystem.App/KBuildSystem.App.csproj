@@ -76,6 +76,12 @@
     <Compile Include="WebSocketService\WebSocketMessageEventArgs.cs" />
     <Compile Include="WebSocketProcessing\BaseMessage.cs" />
     <Compile Include="WebSocketProcessing\BuildStatusMessage.cs" />
+    <Compile Include="Build\BuildController.cs" />
+    <Compile Include="Build\BuildHistoryObject.cs" />
+    <Compile Include="Configuration\ConfigManager.cs" />
+    <Compile Include="Helpers\Bindable.cs" />
+    <Compile Include="Helpers\GeneralHelper.cs" />
+    <Compile Include="Helpers\SafeWriteableStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -84,6 +90,9 @@
     <Folder Include="WebSocketService\" />
     <Folder Include="WebSocket\" />
     <Folder Include="WebSocketProcessing\" />
+    <Folder Include="Build\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
